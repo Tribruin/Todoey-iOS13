@@ -37,14 +37,12 @@ class TodoListViewController: SwipeTableViewController {
                title = selectedCategory?.name
                guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller does not exist.")}
                if let navBarColor = UIColor(hexString: colorHex) {
-                navBar.backgroundColor = navBarColor.darken(byPercentage: 0.50)!
+                navBar.backgroundColor = navBarColor
                    navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
                    navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
                    searchBar.barTintColor = navBarColor
                    searchBar.searchTextField.backgroundColor = FlatWhite()
                }
-               title = selectedCategory!.name
-
            }
     }
     
@@ -63,12 +61,15 @@ class TodoListViewController: SwipeTableViewController {
             cell.textLabel?.text = item.title
             if let color = UIColor(hexString: selectedCategory!.backgroundColor)?.darken(byPercentage: (CGFloat(indexPath.row) / CGFloat(todoItems!.count)))
             {
-                let beginColor = color.lighten(byPercentage: 0.20)!
-                let endColor = color.darken(byPercentage: 0.20)!
+                let contrastColor = ContrastColorOf(color, returnFlat: true)
+                let beginColor = color.lighten(byPercentage: 0.15)!
+                let endColor = color.darken(byPercentage: 0.15)!
                 let colors = [beginColor, endColor]
                 let cellRect = tableView.rectForRow(at: indexPath)
                 cell.backgroundColor = GradientColor(.leftToRight, frame: cellRect, colors: colors)
-                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+//                cell.backgroundColor = color
+                cell.textLabel?.textColor = contrastColor
+                cell.tintColor = contrastColor
             }
             
             //Ternary operator ==>
